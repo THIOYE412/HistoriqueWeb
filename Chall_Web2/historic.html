@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Information</title>
+</head>
+<body>
+    <h1 style = "text-align: center">HISTORIQUE DE VISITE </h1>
+    <div id="information"></div>
+
+    <script>
+        // Charger les données JSON depuis le fichier UserInformation.txt
+        fetch('UserInformation.txt')
+            .then(response => response.json())
+            .then(data => {
+                // Créer une table pour afficher les informations
+                let table = '<table border="1" style = "text-align: center"><tr><th>IP</th ><th>Nombres de visites</th><th>Dates de visite</th></tr>';
+                for (let ip in data) {
+                    let dates = data[ip].dates.join("<br>"); // Convertir le tableau de dates en chaîne de caractères
+                    table += `<tr><td style = "text-align: center" width = "200px">${ip}</td><td style = "text-align: center" width = "450px">${data[ip].visits}</td><td style = "text-align: center" width = "550px">${dates}</td></tr>`;
+                }
+                table += '</table>';
+
+                // Afficher la table dans la div 'information'
+                document.getElementById('information').innerHTML = table;
+            })
+            .catch(error => {
+                console.error('There was a problem with your fetch operation:', error);
+            });
+    </script>
+</body>
+</html>
